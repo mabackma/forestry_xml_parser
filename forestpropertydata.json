@@ -13516,10 +13516,12 @@
                     "$text": null,
                     "StandBasicData": {
                       "Identifiers": {
-                        "Identifier": {
-                          "IdentifierType": "101",
-                          "IdentifierValue": "16"
-                        }
+                        "Identifier": [
+                          {
+                            "IdentifierType": "101",
+                            "IdentifierValue": "16"
+                          }
+                        ]
                       },
                       "CuttingRestriction": 0,
                       "StandInfo": null,
@@ -13841,10 +13843,12 @@
                     "$text": null,
                     "StandBasicData": {
                       "Identifiers": {
-                        "Identifier": {
-                          "IdentifierType": "101",
-                          "IdentifierValue": "16"
-                        }
+                        "Identifier": [
+                          {
+                            "IdentifierType": "101",
+                            "IdentifierValue": "16"
+                          }
+                        ]
                       },
                       "CuttingRestriction": 0,
                       "StandInfo": null,
@@ -14063,10 +14067,12 @@
                     "$text": null,
                     "StandBasicData": {
                       "Identifiers": {
-                        "Identifier": {
-                          "IdentifierType": "101",
-                          "IdentifierValue": "16"
-                        }
+                        "Identifier": [
+                          {
+                            "IdentifierType": "101",
+                            "IdentifierValue": "16"
+                          }
+                        ]
                       },
                       "CuttingRestriction": 0,
                       "StandInfo": null,
@@ -14644,10 +14650,12 @@
                     "$text": null,
                     "StandBasicData": {
                       "Identifiers": {
-                        "Identifier": {
-                          "IdentifierType": "101",
-                          "IdentifierValue": "16"
-                        }
+                        "Identifier": [
+                          {
+                            "IdentifierType": "101",
+                            "IdentifierValue": "16"
+                          }
+                        ]
                       },
                       "CuttingRestriction": 0,
                       "StandInfo": "J tet  n reilusti riistatiheik it",
@@ -17340,10 +17348,12 @@
                     "$text": null,
                     "StandBasicData": {
                       "Identifiers": {
-                        "Identifier": {
-                          "IdentifierType": "101",
-                          "IdentifierValue": "16"
-                        }
+                        "Identifier": [
+                          {
+                            "IdentifierType": "101",
+                            "IdentifierValue": "16"
+                          }
+                        ]
                       },
                       "CuttingRestriction": 0,
                       "StandInfo": "Kuviolla kausikosteikko ja l hde. L hde ojan vieress  Kuviolle toteutetaan riistanhoidollinen \"kalansilm \" hakkuu, jossa j tet  n koskemattomia noin aarin kokoisia alueita hakkaamatta. Aarin alueet tulisis sis lt   monen ik ist  puustoa ja mustikkaa. Suon laitaan j tet  n 50m suojavy hyke.",
@@ -18790,10 +18800,12 @@
                     "$text": null,
                     "StandBasicData": {
                       "Identifiers": {
-                        "Identifier": {
-                          "IdentifierType": "101",
-                          "IdentifierValue": "16"
-                        }
+                        "Identifier": [
+                          {
+                            "IdentifierType": "101",
+                            "IdentifierValue": "16"
+                          }
+                        ]
                       },
                       "CuttingRestriction": 0,
                       "StandInfo": "Ojitusm t stetty ja istutettu m nty  v.1987.",
@@ -19789,10 +19801,12 @@
                     "$text": null,
                     "StandBasicData": {
                       "Identifiers": {
-                        "Identifier": {
-                          "IdentifierType": "101",
-                          "IdentifierValue": "16"
-                        }
+                        "Identifier": [
+                          {
+                            "IdentifierType": "101",
+                            "IdentifierValue": "16"
+                          }
+                        ]
                       },
                       "CuttingRestriction": 0,
                       "StandInfo": "Ojat umpeutuneet, soistunut takaisin, kuviolla perkattu puro",
@@ -20235,10 +20249,12 @@
                     "$text": null,
                     "StandBasicData": {
                       "Identifiers": {
-                        "Identifier": {
-                          "IdentifierType": "101",
-                          "IdentifierValue": "16"
-                        }
+                        "Identifier": [
+                          {
+                            "IdentifierType": "101",
+                            "IdentifierValue": "16"
+                          }
+                        ]
                       },
                       "CuttingRestriction": 0,
                       "StandInfo": null,
@@ -20591,10 +20607,12 @@
                     "$text": null,
                     "StandBasicData": {
                       "Identifiers": {
-                        "Identifier": {
-                          "IdentifierType": "101",
-                          "IdentifierValue": "16"
-                        }
+                        "Identifier": [
+                          {
+                            "IdentifierType": "101",
+                            "IdentifierValue": "16"
+                          }
+                        ]
                       },
                       "CuttingRestriction": 0,
                       "StandInfo": "Harvennettu, lepo",
@@ -20847,10 +20865,12 @@
                     "$text": null,
                     "StandBasicData": {
                       "Identifiers": {
-                        "Identifier": {
-                          "IdentifierType": "101",
-                          "IdentifierValue": "16"
-                        }
+                        "Identifier": [
+                          {
+                            "IdentifierType": "101",
+                            "IdentifierValue": "16"
+                          }
+                        ]
                       },
                       "CuttingRestriction": 0,
                       "StandInfo": null,
@@ -21169,10 +21189,12 @@
                     "$text": null,
                     "StandBasicData": {
                       "Identifiers": {
-                        "Identifier": {
-                          "IdentifierType": "101",
-                          "IdentifierValue": "16"
-                        }
+                        "Identifier": [
+                          {
+                            "IdentifierType": "101",
+                            "IdentifierValue": "16"
+                          }
+                        ]
                       },
                       "CuttingRestriction": 0,
                       "StandInfo": "Kuviolla perattu puro",
@@ -22253,10 +22275,12 @@
                     "$text": null,
                     "StandBasicData": {
                       "Identifiers": {
-                        "Identifier": {
-                          "IdentifierType": "101",
-                          "IdentifierValue": "16"
-                        }
+                        "Identifier": [
+                          {
+                            "IdentifierType": "101",
+                            "IdentifierValue": "16"
+                          }
+                        ]
                       },
                       "CuttingRestriction": 0,
                       "StandInfo": "Kuviolla perattu puro",
@@ -22548,10 +22572,12 @@
                     "$text": null,
                     "StandBasicData": {
                       "Identifiers": {
-                        "Identifier": {
-                          "IdentifierType": "101",
-                          "IdentifierValue": "16"
-                        }
+                        "Identifier": [
+                          {
+                            "IdentifierType": "101",
+                            "IdentifierValue": "16"
+                          }
+                        ]
                       },
                       "CuttingRestriction": 0,
                       "StandInfo": null,
