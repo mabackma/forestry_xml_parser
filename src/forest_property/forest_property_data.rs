@@ -2,11 +2,15 @@ use std::fs;
 use rayon::iter::{IntoParallelIterator, ParallelIterator};
 use serde::{Deserialize, Serialize};
 use super::{geometry::PolygonGeometry, stand::{Stand, Stands}};
+use reqwest::blocking::get;
+use quick_xml::de::from_str;
 
 #[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 pub struct ForestPropertyData {
     #[serde(rename = "RealEstates")]
-    pub real_estates: RealEstates,
+    pub real_estates: Option<RealEstates>,
+    #[serde(rename = "Stands")]
+    pub stands: Option<Stands>,
 }
 
 pub fn read_number_cli(min: usize, max: usize) -> usize {
@@ -35,6 +39,29 @@ impl ForestPropertyData {
         ForestPropertyData::parse_from_str(xml_str)
     }
 
+    pub fn from_xml_url(url: &str) -> ForestPropertyData {
+        let xml = Self::fetch_xml_url(url).unwrap();
+        from_str(&xml).expect("Failed to parse XML")
+    }
+    
+    fn fetch_xml_url(url: &str) -> Option<String> {
+        match get(url) {
+            Ok(resp) => {
+                match resp.text() {
+                    Ok(text) => Some(text),
+                    Err(e) => {
+                        println!("Error: {}", e);
+                        None
+                    }
+                }
+            }
+            Err(e) => {
+                println!("Error: {}", e);
+                None
+            }
+        }
+    }
+
     #[cfg(test)]
     pub fn from_json_file(path: &str) -> ForestPropertyData {
         let json = fs::read_to_string(path).expect("Could not read the JSON file");
@@ -60,7 +87,8 @@ impl ForestPropertyData {
 
     // Parcels are not probably needed in this context but its good to keep them just in case
     pub fn choose_parcel(&self) -> Parcel {
-        let parcels: &Vec<Parcel> = &self.real_estates.real_estate.first().unwrap().parcels.parcel;
+        let binding = self.real_estates.clone().unwrap();
+        let parcels: &Vec<Parcel> = &binding.real_estate.first().unwrap().parcels.parcel;
 
         println!("\nParcels:");
         for (i, parcel) in parcels.iter().enumerate() {
@@ -73,7 +101,7 @@ impl ForestPropertyData {
     }
 
     pub fn get_stand_cli(&self) -> Stand {
-        let real_estates = &self.real_estates.real_estate;
+        let real_estates = &self.real_estates.clone().unwrap().real_estate;
 
         println!("Realestates:");
         for (i, real_estate) in real_estates.iter().enumerate() {
@@ -83,7 +111,7 @@ impl ForestPropertyData {
 
         let real_estate_index = read_number_cli(0, real_estates.len());
 
-        let real_estate = &self.real_estates.real_estate[real_estate_index];
+        let real_estate = &self.real_estates.clone().unwrap().real_estate[real_estate_index];
 
         let stands_data: Vec<Stand> = real_estate.get_stands();
 
