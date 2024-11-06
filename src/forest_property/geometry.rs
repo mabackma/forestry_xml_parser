@@ -83,7 +83,7 @@ pub struct Exterior {
 #[derive(Serialize, Deserialize, Debug, Default, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct LinearRing {
-    #[serde(rename = "$text")]
+    #[serde(rename = "$text", skip_serializing_if = "Option::is_none")]
     pub text: Option<String>,
     #[serde(rename = "coordinates")]
     pub coordinates: String,

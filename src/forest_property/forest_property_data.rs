@@ -7,9 +7,9 @@ use quick_xml::de::from_str;
 
 #[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 pub struct ForestPropertyData {
-    #[serde(rename = "RealEstates")]
+    #[serde(rename = "RealEstates", skip_serializing_if = "Option::is_none")]
     pub real_estates: Option<RealEstates>,
-    #[serde(rename = "Stands")]
+    #[serde(rename = "Stands", skip_serializing_if = "Option::is_none")]
     pub stands: Option<Stands>,
 }
 
@@ -346,8 +346,8 @@ pub struct ProposalData {
 #[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 pub struct Cutting {
     
-    #[serde(rename = "CuttingVolume",default = "default_zero_f32")]
-    pub cutting_volume: f32,
+    #[serde(rename = "CuttingVolume", skip_serializing_if = "Option::is_none")]
+    pub cutting_volume: Option<f32>,
     #[serde(rename = "Assortments")]
     pub assortments: Option<Assortments>,
 }
@@ -367,8 +367,10 @@ pub struct Assortment {
     pub tree_species: Option<String>, // This fails to parse even with default values unless type is Option<String>. Requires manual parsing.
     #[serde(rename = "StemType", default = "default_zero_u32")]
     pub stem_type: u32,
-    #[serde(rename = "AssortmentVolume", default = "default_zero_f32")]
-    pub assortment_volume: f32,
+    #[serde(rename = "AssortmentVolume", skip_serializing_if = "Option::is_none")]
+    pub assortment_volume: Option<f32>,
+    #[serde(rename = "AssortmentPercent", skip_serializing_if = "Option::is_none")]
+    pub assortment_percent: Option<f32>,
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
@@ -408,10 +410,10 @@ pub struct DeadTreeStratum {
     pub dead_tree_type: u8,
     #[serde(rename = "TreeSpecies")]
     pub tree_species: u8,
-    #[serde(rename = "Volume", default = "default_zero_f32")]
-    pub volume: f32,
-    #[serde(rename = "MeanDiameter", default = "default_zero_f32")]
-    pub mean_diameter: f32,
+    #[serde(rename = "Volume", skip_serializing_if = "Option::is_none")]
+    pub volume: Option<f32>,
+    #[serde(rename = "MeanDiameter", skip_serializing_if = "Option::is_none")]
+    pub mean_diameter: Option<f32>,
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
