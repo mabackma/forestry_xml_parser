@@ -1,4 +1,4 @@
-use forestry_xml_parser::forest_property::forest_property_data::ForestPropertyData;
+use forestry_xml_parser::forest_property_data::ForestPropertyData;
 use serde_json;
 use std::fs::File;
 use std::io::Write;
@@ -11,7 +11,7 @@ fn main() {
         Ok(json) => save_to_file("forestpropertydata.json", &json),
         Err(e) => println!("Error: {}", e),
     }
-
+ 
     let url = "https://avoin.metsakeskus.fi/rest/mvrest/FRStandData/v1/ByPolygon?wktPolygon=POLYGON%20((393960.156%206801453.126,%20394798.608%206801657.878,%20394930.512%206801670.111,%20395028.723%206802116.858,%20394258.945%206801929.148,%20394261.711%206801810.541,%20394091.166%206801665.961,%20393960.156%206801453.126))&stdVersion=MV1.9";
     let fetched_property = ForestPropertyData::from_xml_url(url);
 
