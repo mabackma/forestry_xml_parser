@@ -4,7 +4,6 @@ use std::fs::File;
 use std::io::Write;
 
 fn main() {
-
     let property = ForestPropertyData::from_xml_file("forestpropertydata.xml");
 
     match serde_json::to_string_pretty(&property) {

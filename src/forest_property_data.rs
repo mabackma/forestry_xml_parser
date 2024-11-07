@@ -1,5 +1,4 @@
 use std::fs;
-use rayon::iter::{IntoParallelIterator, ParallelIterator};
 use serde::{Deserialize, Serialize};
 use reqwest::blocking::get;
 use quick_xml::de::from_str;
