@@ -1,10 +1,19 @@
 use forestry_xml_parser::forest_property_data::ForestPropertyData;
 use serde_json;
 use std::fs::File;
-use std::io::Write;
+use std::io::{Read, Write};
+use quick_xml::se::to_string;
+use xmlem::Document;
+use std::str::FromStr;
 
 fn main() {
-    let property = ForestPropertyData::from_xml_file("forestpropertydata.xml");
+    //create_json_files();
+    create_xml_from_json_files("forestpropertydata.json");
+    create_xml_from_json_files("fetchedforestpropertydata.json");
+}
+
+fn create_json_files() {
+    let property = ForestPropertyData::from_xml_file("orig_forestpropertydata.xml");
 
     match serde_json::to_string_pretty(&property) {
         Ok(json) => save_to_file("forestpropertydata.json", &json),
@@ -18,6 +27,21 @@ fn main() {
         Ok(json) => save_to_file("fetchedforestpropertydata.json", &json),
         Err(e) => println!("Error: {}", e),
     }
+}
+
+fn create_xml_from_json_files(file_name: &str) {
+    let mut file = File::open(file_name).expect("Unable to open file");
+    let mut json_data = String::new();
+    file.read_to_string(&mut json_data).expect("Unable to read data");
+
+    let forest_property_data: ForestPropertyData = serde_json::from_str(&json_data).expect("Could not parse JSON");
+    let xml_string = to_string(&forest_property_data).expect("Could not convert to XML");
+    
+    let doc = Document::from_str(&xml_string).unwrap();
+    let pretty_xml = doc.to_string_pretty();
+    
+    let new_file_name = file_name.replace(".json", ".xml");
+    save_to_file(&new_file_name, &pretty_xml);
 }
 
 fn save_to_file(file_name: &str, data: &str) {
