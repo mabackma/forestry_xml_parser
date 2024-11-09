@@ -7,9 +7,9 @@ use xmlem::Document;
 use std::str::FromStr;
 
 fn main() {
-    //create_json_files();
-    create_xml_from_json_files("forestpropertydata.json");
-    create_xml_from_json_files("fetchedforestpropertydata.json");
+    create_json_files();
+    xmlem_xml_from_json("forestpropertydata.json");
+    xmlem_xml_from_json("fetchedforestpropertydata.json");
 }
 
 fn create_json_files() {
@@ -29,7 +29,7 @@ fn create_json_files() {
     }
 }
 
-fn create_xml_from_json_files(file_name: &str) {
+fn xmlem_xml_from_json(file_name: &str) {
     let mut file = File::open(file_name).expect("Unable to open file");
     let mut json_data = String::new();
     file.read_to_string(&mut json_data).expect("Unable to read data");
