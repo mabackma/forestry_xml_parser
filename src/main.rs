@@ -5,15 +5,16 @@ use std::io::{Read, Write};
 use quick_xml::se::to_string;
 use xmlem::Document;
 use std::str::FromStr;
+use serde_json::Value;
 
 fn main() {
-    create_json_files();
-    xmlem_xml_from_json("forestpropertydata.json");
-    xmlem_xml_from_json("fetchedforestpropertydata.json");
+    //create_json_files();
+    json_to_xml_xmlem("forestpropertydata.json");
+    //json_to_xml_xmlem("fetchedforestpropertydata.json");
 }
 
 fn create_json_files() {
-    let property = ForestPropertyData::from_xml_file("orig_forestpropertydata.xml");
+    let property = ForestPropertyData::from_xml_file("forestpropertydata.xml");
 
     match serde_json::to_string_pretty(&property) {
         Ok(json) => save_to_file("forestpropertydata.json", &json),
@@ -29,11 +30,16 @@ fn create_json_files() {
     }
 }
 
-fn xmlem_xml_from_json(file_name: &str) {
+fn json_to_xml_xmlem(file_name: &str) {
     let mut file = File::open(file_name).expect("Unable to open file");
     let mut json_data = String::new();
     file.read_to_string(&mut json_data).expect("Unable to read data");
 
+    // Get the root tag from the JSON data
+    let json_value: Value = serde_json::from_str(&json_data).unwrap();
+    let root_tag = generate_xml_tag_from_json(&json_value);
+    println!("Root tag: {}", root_tag);
+    
     let forest_property_data: ForestPropertyData = serde_json::from_str(&json_data).expect("Could not parse JSON");
     let xml_string = to_string(&forest_property_data).expect("Could not convert to XML");
     
@@ -47,4 +53,28 @@ fn xmlem_xml_from_json(file_name: &str) {
 fn save_to_file(file_name: &str, data: &str) {
     let mut file = File::create(file_name).expect("Unable to create file");
     file.write_all(data.as_bytes()).expect("Unable to write data");
+}
+
+fn generate_xml_tag_from_json(json: &Value) -> String {
+    let mut attributes = String::new();
+
+    match json {
+        Value::Object(map) => {
+            for (key, value) in map {
+                // If the key starts with '@', treat it as an XML attribute
+                if key.starts_with('@') {
+                    let attribute_name = key.trim_start_matches('@'); // Remove the '@' prefix
+                    attributes.push_str(&format!(r#" {}={}"#, attribute_name, value));
+                }
+            }
+        }
+        // If the JSON is a string, just use it as the text content
+        Value::String(s) => {
+            attributes.push_str(s);
+        }
+        // If the JSON is null or another type, handle as needed (empty or custom behavior)
+        _ => {}
+    }
+
+    "<ForestPropertyData".to_owned() + &attributes + ">"
 }

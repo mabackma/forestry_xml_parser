@@ -44,7 +44,7 @@ pub struct ForestPropertyData {
     #[serde(rename = "RealEstates", skip_serializing_if = "Option::is_none")]
     pub re_real_estates: Option<ReRealEstates>,
     #[serde(rename = "Stands", skip_serializing_if = "Option::is_none")]
-    pub st_stands: Option<StStands>,
+    pub st_stands: Option<StStands>
 }
 
 impl ForestPropertyData {
@@ -86,7 +86,7 @@ pub struct ReRealEstates {
     #[serde(rename = "$text")]
     pub text: Option<String>,
     #[serde(rename = "RealEstate")]
-    pub re_real_estate: ReRealEstate,
+    pub re_real_estate: ReRealEstate
 }
 
 #[derive(Serialize, Deserialize)]
@@ -106,7 +106,7 @@ pub struct ReRealEstate {
     #[serde(rename = "RealEstateName")]
     pub re_real_estate_name: String,
     #[serde(rename = "Parcels")]
-    pub re_parcels: ReParcels,
+    pub re_parcels: ReParcels
 }
 
 #[derive(Serialize, Deserialize)]
@@ -114,7 +114,7 @@ pub struct ReParcels {
     #[serde(rename = "$text")]
     pub text: Option<String>,
     #[serde(rename = "Parcel")]
-    pub re_parcel: Vec<ReParcel>,
+    pub re_parcel: Vec<ReParcel>
 }
 
 #[derive(Serialize, Deserialize)]
@@ -126,7 +126,7 @@ pub struct ReParcel {
     #[serde(rename = "ParcelNumber")]
     pub re_parcel_number: String,
     #[serde(rename = "Stands")]
-    pub st_stands: StStands,
+    pub st_stands: StStands
 }
 
 #[derive(Serialize, Deserialize)]
@@ -134,7 +134,7 @@ pub struct StStands {
     #[serde(rename = "$text")]
     pub text: Option<String>,
     #[serde(rename = "Stand")]
-    pub st_stand: Vec<StStand>,
+    pub st_stand: Vec<StStand>
 }
 
 #[derive(Serialize, Deserialize)]
@@ -150,7 +150,7 @@ pub struct StStand {
     #[serde(rename = "Operations", skip_serializing_if = "Option::is_none")]
     pub op_operations: Option<OpOperations>,
     #[serde(rename = "SpecialFeatures", skip_serializing_if = "Option::is_none")]
-    pub st_special_features: Option<StSpecialFeatures>,
+    pub st_special_features: Option<StSpecialFeatures>
 }
 
 #[derive(Serialize, Deserialize)]
@@ -206,7 +206,7 @@ pub struct StStandBasicData {
     #[serde(rename = "AreaDecrease", skip_serializing_if = "Option::is_none")]
     pub st_area_decrease: Option<String>,
     #[serde(rename = "PolygonGeometry")]
-    pub gdt_polygon_geometry: GdtPolygonGeometry,
+    pub gdt_polygon_geometry: GdtPolygonGeometry
 }
 
 #[derive(Serialize, Deserialize)]
@@ -214,7 +214,7 @@ pub struct StIdentifiers {
     #[serde(rename = "$text")]
     pub text: Option<String>,
     #[serde(rename = "Identifier")]
-    pub st_identifier: Vec<StIdentifier>,
+    pub st_identifier: Vec<StIdentifier>
 }
 
 #[derive(Serialize, Deserialize)]
@@ -224,7 +224,7 @@ pub struct StIdentifier {
     #[serde(rename = "IdentifierType")]
     pub co_identifier_type: String,
     #[serde(rename = "IdentifierValue")]
-    pub co_identifier_value: String,
+    pub co_identifier_value: String
 }
 
 #[derive(Serialize, Deserialize)]
@@ -234,7 +234,7 @@ pub struct GdtPolygonGeometry {
     #[serde(rename = "pointProperty")]
     pub gml_point_property: GmlPointProperty,
     #[serde(rename = "polygonProperty")]
-    pub gml_polygon_property: GmlPolygonProperty,
+    pub gml_polygon_property: GmlPolygonProperty
 }
 
 #[derive(Serialize, Deserialize)]
@@ -242,7 +242,7 @@ pub struct GmlPointProperty {
     #[serde(rename = "$text")]
     pub text: Option<String>,
     #[serde(rename = "Point")]
-    pub gml_point: GmlPoint,
+    pub gml_point: GmlPoint
 }
 
 #[derive(Serialize, Deserialize)]
@@ -252,7 +252,7 @@ pub struct GmlPoint {
     #[serde(rename = "$text")]
     pub text: Option<String>,
     #[serde(rename = "coordinates")]
-    pub gml_coordinates: String,
+    pub gml_coordinates: String
 }
 
 #[derive(Serialize, Deserialize)]
@@ -260,7 +260,7 @@ pub struct GmlPolygonProperty {
     #[serde(rename = "$text")]
     pub text: Option<String>,
     #[serde(rename = "Polygon")]
-    pub gml_polygon: GmlPolygon,
+    pub gml_polygon: GmlPolygon
 }
 
 #[derive(Serialize, Deserialize)]
@@ -272,7 +272,7 @@ pub struct GmlPolygon {
     #[serde(rename = "exterior", skip_serializing_if = "Option::is_none")]
     pub gml_exterior: Option<GmlExterior>,
     #[serde(rename = "interior", skip_serializing_if = "Option::is_none")]
-    pub gml_interior: Option<Vec<GmlInterior>>,
+    pub gml_interior: Option<Vec<GmlInterior>>
 }
 
 #[derive(Serialize, Deserialize)]
@@ -280,7 +280,7 @@ pub struct GmlInterior {
     #[serde(rename = "$text")]
     pub text: Option<String>,
     #[serde(rename = "LinearRing")]
-    pub gml_linear_ring: GmlInteriorGmlLinearRing,
+    pub gml_linear_ring: GmlInteriorGmlLinearRing
 }
 
 #[derive(Serialize, Deserialize)]
@@ -288,7 +288,7 @@ pub struct GmlInteriorGmlLinearRing {
     #[serde(rename = "$text", skip_serializing_if = "Option::is_none")]
     pub text: Option<String>,
     #[serde(rename = "coordinates")]
-    pub gml_coordinates: String,
+    pub gml_coordinates: String
 }
 
 #[derive(Serialize, Deserialize)]
@@ -296,7 +296,7 @@ pub struct GmlExterior {
     #[serde(rename = "$text")]
     pub text: Option<String>,
     #[serde(rename = "LinearRing")]
-    pub gml_linear_ring: GmlExteriorGmlLinearRing,
+    pub gml_linear_ring: GmlExteriorGmlLinearRing
 }
 
 #[derive(Serialize, Deserialize)]
@@ -304,7 +304,7 @@ pub struct GmlExteriorGmlLinearRing {
     #[serde(rename = "$text")]
     pub text: Option<String>,
     #[serde(rename = "coordinates")]
-    pub gml_coordinates: String,
+    pub gml_coordinates: String
 }
 
 #[derive(Serialize, Deserialize)]
@@ -312,7 +312,7 @@ pub struct StSpecialFeatures {
     #[serde(rename = "$text")]
     pub text: Option<String>,
     #[serde(rename = "SpecialFeature")]
-    pub st_special_feature: Vec<StSpecialFeature>,
+    pub st_special_feature: Vec<StSpecialFeature>
 }
 
 #[derive(Serialize, Deserialize)]
@@ -328,7 +328,7 @@ pub struct StSpecialFeature {
     #[serde(rename = "FeatureCode")]
     pub sf_feature_code: String,
     #[serde(rename = "FeatureAdditionalCode", skip_serializing_if = "Option::is_none")]
-    pub sf_feature_additional_code: Option<String>,
+    pub sf_feature_additional_code: Option<String>
 }
 
 #[derive(Serialize, Deserialize)]
@@ -336,7 +336,7 @@ pub struct OpOperations {
     #[serde(rename = "$text")]
     pub text: Option<String>,
     #[serde(rename = "Operation")]
-    pub op_operation: Vec<OpOperation>,
+    pub op_operation: Vec<OpOperation>
 }
 
 #[derive(Serialize, Deserialize)]
@@ -366,7 +366,7 @@ pub struct OpOperation {
     #[serde(rename = "Cutting", skip_serializing_if = "Option::is_none")]
     pub op_cutting: Option<OpCutting>,
     #[serde(rename = "Silviculture", skip_serializing_if = "Option::is_none")]
-    pub op_silviculture: Option<OpSilviculture>,
+    pub op_silviculture: Option<OpSilviculture>
 }
 
 #[derive(Serialize, Deserialize)]
@@ -374,7 +374,7 @@ pub struct OpCompletionData {
     #[serde(rename = "$text")]
     pub text: Option<String>,
     #[serde(rename = "CompletionDate")]
-    pub op_completion_date: String,
+    pub op_completion_date: String
 }
 
 #[derive(Serialize, Deserialize)]
@@ -382,7 +382,7 @@ pub struct OpSpecifications {
     #[serde(rename = "$text")]
     pub text: Option<String>,
     #[serde(rename = "Specification")]
-    pub op_specification: Vec<OpSpecification>,
+    pub op_specification: Vec<OpSpecification>
 }
 
 #[derive(Serialize, Deserialize)]
@@ -394,7 +394,7 @@ pub struct OpSpecification {
     #[serde(rename = "ChangeState")]
     pub co_change_state: String,
     #[serde(rename = "SpecificationCode")]
-    pub op_specification_code: String,
+    pub op_specification_code: String
 }
 
 #[derive(Serialize, Deserialize)]
@@ -408,7 +408,7 @@ pub struct OpProposalData {
     #[serde(rename = "ProposalType")]
     pub op_proposal_type: String,
     #[serde(rename = "ProposalYear")]
-    pub op_proposal_year: String,
+    pub op_proposal_year: String
 }
 
 #[derive(Serialize, Deserialize)]
@@ -418,7 +418,7 @@ pub struct OpCutting {
     #[serde(rename = "CuttingVolume", skip_serializing_if = "Option::is_none")]
     pub op_cutting_volume: Option<String>,
     #[serde(rename = "Assortments", skip_serializing_if = "Option::is_none")]
-    pub op_assortments: Option<OpAssortments>,
+    pub op_assortments: Option<OpAssortments>
 }
 
 #[derive(Serialize, Deserialize)]
@@ -426,7 +426,7 @@ pub struct OpAssortments {
     #[serde(rename = "$text")]
     pub text: Option<String>,
     #[serde(rename = "Assortment")]
-    pub op_assortment: Vec<OpAssortment>,
+    pub op_assortment: Vec<OpAssortment>
 }
 
 #[derive(Serialize, Deserialize)]
@@ -444,7 +444,7 @@ pub struct OpAssortment {
     #[serde(rename = "AssortmentVolume", skip_serializing_if = "Option::is_none")]
     pub op_assortment_volume: Option<String>,
     #[serde(rename = "AssortmentPercent", skip_serializing_if = "Option::is_none")]
-    pub op_assortment_percent: Option<String>,
+    pub op_assortment_percent: Option<String>
 }
 
 #[derive(Serialize, Deserialize)]
@@ -452,7 +452,7 @@ pub struct TsTreeStandData {
     #[serde(rename = "$text")]
     pub text: Option<String>,
     #[serde(rename = "TreeStandDataDate")]
-    pub ts_tree_stand_data_date: Vec<TsTreeStandDataDate>,
+    pub ts_tree_stand_data_date: Vec<TsTreeStandDataDate>
 }
 
 #[derive(Serialize, Deserialize)]
@@ -468,7 +468,7 @@ pub struct TsTreeStandDataDate {
     #[serde(rename = "DeadTreeStrata", skip_serializing_if = "Option::is_none")]
     pub dts_dead_tree_strata: Option<DtsDeadTreeStrata>,
     #[serde(rename = "TreeStandSummary", skip_serializing_if = "Option::is_none")]
-    pub tss_tree_stand_summary: Option<TssTreeStandSummary>,
+    pub tss_tree_stand_summary: Option<TssTreeStandSummary>
 }
 
 #[derive(Serialize, Deserialize)]
@@ -476,7 +476,7 @@ pub struct DtsDeadTreeStrata {
     #[serde(rename = "$text")]
     pub text: Option<String>,
     #[serde(rename = "DeadTreeStratum")]
-    pub dts_dead_tree_stratum: Vec<DtsDeadTreeStratum>,
+    pub dts_dead_tree_stratum: Vec<DtsDeadTreeStratum>
 }
 
 #[derive(Serialize, Deserialize)]
@@ -494,7 +494,7 @@ pub struct DtsDeadTreeStratum {
     #[serde(rename = "MeanDiameter", skip_serializing_if = "Option::is_none")]
     pub dts_mean_diameter: Option<String>,
     #[serde(rename = "Volume", skip_serializing_if = "Option::is_none")]
-    pub dts_volume: Option<String>,
+    pub dts_volume: Option<String>
 }
 
 #[derive(Serialize, Deserialize)]
@@ -502,7 +502,7 @@ pub struct TstTreeStrata {
     #[serde(rename = "$text")]
     pub text: Option<String>,
     #[serde(rename = "TreeStratum")]
-    pub tst_tree_stratum: Vec<TstTreeStratum>,
+    pub tst_tree_stratum: Vec<TstTreeStratum>
 }
 
 #[derive(Serialize, Deserialize)]
@@ -548,7 +548,7 @@ pub struct TstTreeStratum {
     #[serde(rename = "StemBiomass", skip_serializing_if = "Option::is_none")]
     pub tst_stem_biomass: Option<String>,
     #[serde(rename = "StumpBiomass", skip_serializing_if = "Option::is_none")]
-    pub tst_stump_biomass: Option<String>,
+    pub tst_stump_biomass: Option<String>
 }
 
 #[derive(Serialize, Deserialize)]
@@ -592,6 +592,6 @@ pub struct TssTreeStandSummary {
     #[serde(rename = "StumpBiomass", skip_serializing_if = "Option::is_none")]
     pub tss_stump_biomass: Option<String>,
     #[serde(rename = "MainTreeSpecies", skip_serializing_if = "Option::is_none")]
-    pub tss_main_tree_species: Option<String>,
+    pub tss_main_tree_species: Option<String>
 }
 
