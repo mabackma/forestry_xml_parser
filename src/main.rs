@@ -1,5 +1,6 @@
 use forestry_xml_parser::forest_property_data::ForestPropertyData;
 use serde_json;
+use std::collections::HashMap;
 use std::fs::File;
 use std::io::{Read, Write};
 use quick_xml::se::to_string;
@@ -50,6 +51,8 @@ fn json_to_xml_xmlem(file_name: &str) {
     pretty_xml = re_opening.replace(&pretty_xml, "").to_string();
     pretty_xml = root_tag.as_str().to_owned() + &pretty_xml;
     
+    //add_prefixes(&mut pretty_xml);
+
     let new_file_name = file_name.replace(".json", ".xml");
     save_to_file(&new_file_name, &pretty_xml);
 }
@@ -81,4 +84,55 @@ fn generate_xml_tag_from_json(json: &Value) -> String {
     }
 
     "<ForestPropertyData".to_owned() + &attributes + ">"
+}
+
+fn add_prefixes(xml_string: &mut String) {
+    let mut tag_prefix_map = HashMap::new();
+    tag_prefix_map.insert("RealEstates", "re");
+    tag_prefix_map.insert("RealEstate", "re");
+    tag_prefix_map.insert("Parcels", "re");
+    tag_prefix_map.insert("Parcel", "re");
+    tag_prefix_map.insert("Stands", "st");
+    tag_prefix_map.insert("Stand", "st");
+    tag_prefix_map.insert("StandBasicData", "st");
+    tag_prefix_map.insert("Identifiers", "st");
+    tag_prefix_map.insert("Identifier", "st");
+    tag_prefix_map.insert("PolygonGeometry", "gdt");
+    tag_prefix_map.insert("PointProperty", "gml");
+    tag_prefix_map.insert("Point", "gml");
+    tag_prefix_map.insert("PolygonProperty", "gml");
+    tag_prefix_map.insert("Polygon", "gml");
+    tag_prefix_map.insert("interior", "gml");
+    tag_prefix_map.insert("LinearRing ", "gml");
+    tag_prefix_map.insert("exterior", "gml");
+    tag_prefix_map.insert("SpecialFeatures", "st");
+    tag_prefix_map.insert("SpecialFeature", "st");
+    tag_prefix_map.insert("Operations", "op");
+    tag_prefix_map.insert("Operation", "op");
+    tag_prefix_map.insert("CompletionData", "op");
+    tag_prefix_map.insert("Specifications", "op");
+    tag_prefix_map.insert("Specification", "op");
+    tag_prefix_map.insert("Silviculture", "op");
+    tag_prefix_map.insert("ProposalData", "op");
+    tag_prefix_map.insert("Cutting", "op");
+    tag_prefix_map.insert("Assortments", "op");
+    tag_prefix_map.insert("Assortment", "op");
+    tag_prefix_map.insert("TreeStandData", "ts");
+    tag_prefix_map.insert("TreeStandDataDate", "ts");
+    tag_prefix_map.insert("DeadTreeStrata", "dts");
+    tag_prefix_map.insert("DeadTreeStratum", "dts");
+    tag_prefix_map.insert("TreeStrata", "tst");
+    tag_prefix_map.insert("TreeStratum", "tst");
+    tag_prefix_map.insert("TreeStandSummary", "tss");
+
+    for (tag, prefix) in &tag_prefix_map {
+        let prefixed_tag = format!("<{}:{tag}", prefix);
+        let tag_pattern = format!("<{tag}");
+        let prefixed_end_tag = format!("</{}:{tag}>", prefix);
+        let end_tag_pattern = format!("</{tag}>");
+
+        // Replace tags
+        *xml_string = xml_string.replace(&tag_pattern, &prefixed_tag);
+        *xml_string = xml_string.replace(&end_tag_pattern, &prefixed_end_tag);
+    }
 }
