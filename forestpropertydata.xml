@@ -1,18 +1,4 @@
-<ForestPropertyData xmlns="http://standardit.tapio.fi/schemas/forestData"
-  re="http://standardit.tapio.fi/schemas/forestData/realEstate"
-  st="http://standardit.tapio.fi/schemas/forestData/stand/2010/08/31"
-  ts="http://standardit.tapio.fi/schemas/forestData/treeStand"
-  tst="http://standardit.tapio.fi/schemas/forestData/treeStratum"
-  dts="http://standardit.tapio.fi/schemas/forestData/deadTreeStrata"
-  tss="http://standardit.tapio.fi/schemas/forestData/treeStandSummary"
-  op="http://standardit.tapio.fi/schemas/forestData/operation"
-  sf="http://standardit.tapio.fi/schemas/forestData/specialFeature/2010/08/31"
-  gdt="http://standardit.tapio.fi/schemas/forestData/common/geometricDataTypes"
-  co="http://standardit.tapio.fi/schemas/forestData/common"
-  gml="http://www.opengis.net/gml"
-  xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xlink="http://www.w3.org/1999/xlink"
-  schemaLocation="http://standardit.tapio.fi/schemas/forestData ForestData.xsd">
+<ForestPropertyData schemaLocation="http://standardit.tapio.fi/schemas/forestData ForestData.xsd" xmlns="http://standardit.tapio.fi/schemas/forestData" xmlns:co="http://standardit.tapio.fi/schemas/forestData/common" xmlns:dts="http://standardit.tapio.fi/schemas/forestData/deadTreeStrata" xmlns:gdt="http://standardit.tapio.fi/schemas/forestData/common/geometricDataTypes" xmlns:gml="http://www.opengis.net/gml" xmlns:op="http://standardit.tapio.fi/schemas/forestData/operation" xmlns:re="http://standardit.tapio.fi/schemas/forestData/realEstate" xmlns:sf="http://standardit.tapio.fi/schemas/forestData/specialFeature/2010/08/31" xmlns:st="http://standardit.tapio.fi/schemas/forestData/stand/2010/08/31" xmlns:ts="http://standardit.tapio.fi/schemas/forestData/treeStand" xmlns:tss="http://standardit.tapio.fi/schemas/forestData/treeStandSummary" xmlns:tst="http://standardit.tapio.fi/schemas/forestData/treeStratum" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <RealEstates>
     <RealEstate id="526637">
       <MunicipalityNumber>

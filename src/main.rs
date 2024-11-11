@@ -6,15 +6,16 @@ use quick_xml::se::to_string;
 use xmlem::Document;
 use std::str::FromStr;
 use serde_json::Value;
+use regex::Regex;
 
 fn main() {
-    //create_json_files();
+    create_json_files();
     json_to_xml_xmlem("forestpropertydata.json");
-    //json_to_xml_xmlem("fetchedforestpropertydata.json");
+    json_to_xml_xmlem("fetchedforestpropertydata.json");
 }
 
 fn create_json_files() {
-    let property = ForestPropertyData::from_xml_file("forestpropertydata.xml");
+    let property = ForestPropertyData::from_xml_file("orig_forestpropertydata.xml");
 
     match serde_json::to_string_pretty(&property) {
         Ok(json) => save_to_file("forestpropertydata.json", &json),
@@ -38,13 +39,16 @@ fn json_to_xml_xmlem(file_name: &str) {
     // Get the root tag from the JSON data
     let json_value: Value = serde_json::from_str(&json_data).unwrap();
     let root_tag = generate_xml_tag_from_json(&json_value);
-    println!("Root tag: {}", root_tag);
     
     let forest_property_data: ForestPropertyData = serde_json::from_str(&json_data).expect("Could not parse JSON");
     let xml_string = to_string(&forest_property_data).expect("Could not convert to XML");
-    
+
     let doc = Document::from_str(&xml_string).unwrap();
-    let pretty_xml = doc.to_string_pretty();
+    let mut pretty_xml = doc.to_string_pretty();
+
+    let re_opening = Regex::new(r#"<ForestPropertyData[^>]*>"#).unwrap();
+    pretty_xml = re_opening.replace(&pretty_xml, "").to_string();
+    pretty_xml = root_tag.as_str().to_owned() + &pretty_xml;
     
     let new_file_name = file_name.replace(".json", ".xml");
     save_to_file(&new_file_name, &pretty_xml);
