@@ -13,32 +13,40 @@ use std::path::Path;
 
 fn main() {
     let source_url = "https://avoin.metsakeskus.fi/rest/mvrest/FRStandData/v1/ByPolygon?wktPolygon=POLYGON%20((393960.156%206801453.126,%20394798.608%206801657.878,%20394930.512%206801670.111,%20395028.723%206802116.858,%20394258.945%206801929.148,%20394261.711%206801810.541,%20394091.166%206801665.961,%20393960.156%206801453.126))&stdVersion=MV1.9";
+    //let source_file_name = "xml_history/XML_MV_K3414E.xml";
+    //let source_file_name = "xml_stands/XML_MV_R5311E.xml";
     let source_file_name = "orig_forestpropertydata.xml";
-    //let source_file_name = "forestpropertydata_file_1_7.xml";
-    //let source_file_name = "forestpropertydata_url_1_9.xml";
     
     // Create a JSON file from the XML data
     let json_file_name = create_json_file(source_file_name);
 
     // Convert the JSON file back to XML
     let info_lines = information_lines(source_file_name);
-    json_to_xml_xmlem(json_file_name, &info_lines);
+    json_to_xml_xmlem(&json_file_name, &info_lines);
 }
 
 // Create a JSON file from the XML data
 // Returns the name of the JSON file
-fn create_json_file(input_string: &str) -> &str {
+fn create_json_file(input_string: &str) -> String {
     let property: ForestPropertyData;
-    let json_file_name = "forestpropertydata_file_1_7.json";
+    let mut json_file_name = "".to_string();
+    let mut standard = "".to_string();
 
     if input_string.starts_with("https://") || input_string.starts_with("http://") {
         property = ForestPropertyData::from_xml_url(input_string);
+        json_file_name = "forestpropertydata_url.json".to_string();
     } else {
-        property = ForestPropertyData::from_xml_file(input_string);
+        let xml_string = read_file_without_bom(input_string).expect("Could not read file");
+        property = ForestPropertyData::from_xml_str(&xml_string);
+
+        if let Some(std) = get_standard(&xml_string) {
+            standard = std;
+        }
+        json_file_name = format!("forestpropertydata_file_{}.json", standard);
     }
 
     match serde_json::to_string_pretty(&property) {
-        Ok(json) => save_to_file(json_file_name, &json),
+        Ok(json) => save_to_file(&json_file_name, &json),
         Err(e) => println!("Error: {}", e),
     }
 
@@ -134,6 +142,30 @@ fn generate_xml_tag_from_json(json: &Value) -> String {
     }
 
     "<ForestPropertyData".to_owned() + &attributes + ">"
+}
+
+fn read_file_without_bom(path: &str) -> io::Result<String> {
+    let mut file = File::open(path)?;
+    let mut buffer = Vec::new();
+    file.read_to_end(&mut buffer)?;
+
+    // Check if buffer starts with UTF-8 BOM and skip it if present
+    let content = if buffer.starts_with(&[0xEF, 0xBB, 0xBF]) {
+        println!("BOM detected");
+        String::from_utf8_lossy(&buffer[3..]).to_string()
+    } else {
+        String::from_utf8_lossy(&buffer).to_string()
+    };
+
+    Ok(content)
+}
+
+fn get_standard(xml_string: &str) -> Option<String> {
+    // This regex captures the version after `MTStd-version = ` until the next whitespace or punctuation.
+    let re = Regex::new(r#"MTStd-version = (\w+)"#).unwrap();
+    // Capture the group for the version if it matches
+    re.captures(xml_string)
+        .and_then(|cap| cap.get(1).map(|m| m.as_str().to_string()))
 }
 
 fn add_prefixes(xml_string: &mut String) {
