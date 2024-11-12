@@ -12,29 +12,40 @@ use std::io::{self, BufRead};
 use std::path::Path;
 
 fn main() {
-    //create_json_files();
-    let info_lines = information_lines("orig_forestpropertydata.xml");
-    json_to_xml_xmlem("forestpropertydata.json", &info_lines);
-    //json_to_xml_xmlem("fetchedforestpropertydata.json");
+    let source_url = "https://avoin.metsakeskus.fi/rest/mvrest/FRStandData/v1/ByPolygon?wktPolygon=POLYGON%20((393960.156%206801453.126,%20394798.608%206801657.878,%20394930.512%206801670.111,%20395028.723%206802116.858,%20394258.945%206801929.148,%20394261.711%206801810.541,%20394091.166%206801665.961,%20393960.156%206801453.126))&stdVersion=MV1.9";
+    let source_file_name = "orig_forestpropertydata.xml";
+    //let source_file_name = "forestpropertydata_file_1_7.xml";
+    //let source_file_name = "forestpropertydata_url_1_9.xml";
+    
+    // Create a JSON file from the XML data
+    let json_file_name = create_json_file(source_file_name);
+
+    // Convert the JSON file back to XML
+    let info_lines = information_lines(source_file_name);
+    json_to_xml_xmlem(json_file_name, &info_lines);
 }
 
-fn create_json_files() {
-    let property = ForestPropertyData::from_xml_file("orig_forestpropertydata.xml");
+// Create a JSON file from the XML data
+// Returns the name of the JSON file
+fn create_json_file(input_string: &str) -> &str {
+    let property: ForestPropertyData;
+    let json_file_name = "forestpropertydata_file_1_7.json";
+
+    if input_string.starts_with("https://") || input_string.starts_with("http://") {
+        property = ForestPropertyData::from_xml_url(input_string);
+    } else {
+        property = ForestPropertyData::from_xml_file(input_string);
+    }
 
     match serde_json::to_string_pretty(&property) {
-        Ok(json) => save_to_file("forestpropertydata.json", &json),
+        Ok(json) => save_to_file(json_file_name, &json),
         Err(e) => println!("Error: {}", e),
     }
- 
-    let url = "https://avoin.metsakeskus.fi/rest/mvrest/FRStandData/v1/ByPolygon?wktPolygon=POLYGON%20((393960.156%206801453.126,%20394798.608%206801657.878,%20394930.512%206801670.111,%20395028.723%206802116.858,%20394258.945%206801929.148,%20394261.711%206801810.541,%20394091.166%206801665.961,%20393960.156%206801453.126))&stdVersion=MV1.9";
-    let fetched_property = ForestPropertyData::from_xml_url(url);
 
-    match serde_json::to_string_pretty(&fetched_property) {
-        Ok(json) => save_to_file("fetchedforestpropertydata.json", &json),
-        Err(e) => println!("Error: {}", e),
-    }
+    json_file_name
 }
 
+// Convert a JSON file to XML using the xmlem crate
 fn json_to_xml_xmlem(file_name: &str, info_lines: &Option<Vec<String>>) {
     let mut file = File::open(file_name).expect("Unable to open file");
     let mut json_data = String::new();
@@ -63,6 +74,8 @@ fn json_to_xml_xmlem(file_name: &str, info_lines: &Option<Vec<String>>) {
         }
 
         pretty_xml = info_string + "<!--Parsed with forestry_xml_parser V0.1.0-->\n" + &pretty_xml;
+    } else {
+        pretty_xml = "<!--Parsed with forestry_xml_parser V0.1.0-->\n".to_owned() + &pretty_xml;
     }
 
     //add_prefixes(&mut pretty_xml);
@@ -86,6 +99,8 @@ fn information_lines(file_name: &str) -> Option<Vec<String>> {
             }
             info_lines.push(line.clone());
         }
+    } else {
+        return None;
     }
 
     Some(info_lines)
