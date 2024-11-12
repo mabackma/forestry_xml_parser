@@ -8,11 +8,14 @@ use xmlem::Document;
 use std::str::FromStr;
 use serde_json::Value;
 use regex::Regex;
+use std::io::{self, BufRead};
+use std::path::Path;
 
 fn main() {
-    create_json_files();
-    json_to_xml_xmlem("forestpropertydata.json");
-    json_to_xml_xmlem("fetchedforestpropertydata.json");
+    //create_json_files();
+    let info_lines = information_lines("orig_forestpropertydata.xml");
+    json_to_xml_xmlem("forestpropertydata.json", &info_lines);
+    //json_to_xml_xmlem("fetchedforestpropertydata.json");
 }
 
 fn create_json_files() {
@@ -32,7 +35,7 @@ fn create_json_files() {
     }
 }
 
-fn json_to_xml_xmlem(file_name: &str) {
+fn json_to_xml_xmlem(file_name: &str, info_lines: &Option<Vec<String>>) {
     let mut file = File::open(file_name).expect("Unable to open file");
     let mut json_data = String::new();
     file.read_to_string(&mut json_data).expect("Unable to read data");
@@ -50,7 +53,18 @@ fn json_to_xml_xmlem(file_name: &str) {
     let re_opening = Regex::new(r#"<ForestPropertyData[^>]*>"#).unwrap();
     pretty_xml = re_opening.replace(&pretty_xml, "").to_string();
     pretty_xml = root_tag.as_str().to_owned() + &pretty_xml;
-    
+
+    // Add information about the XML parser
+    if let Some(lines) = info_lines {
+        let mut info_string: String = String::new();
+
+        for line in lines {
+            info_string = info_string.to_owned() + line + "\n";
+        }
+
+        pretty_xml = info_string + "<!--Parsed with forestry_xml_parser V0.1.0-->\n" + &pretty_xml;
+    }
+
     //add_prefixes(&mut pretty_xml);
 
     let new_file_name = file_name.replace(".json", ".xml");
@@ -60,6 +74,27 @@ fn json_to_xml_xmlem(file_name: &str) {
 fn save_to_file(file_name: &str, data: &str) {
     let mut file = File::create(file_name).expect("Unable to create file");
     file.write_all(data.as_bytes()).expect("Unable to write data");
+}
+
+fn information_lines(file_name: &str) -> Option<Vec<String>> {
+    let mut info_lines = Vec::new();
+
+    if let Ok(lines) = read_lines(file_name) {
+        for line in lines.flatten() {
+            if line.contains("ForestPropertyData") {
+                break;
+            }
+            info_lines.push(line.clone());
+        }
+    }
+
+    Some(info_lines)
+}
+
+fn read_lines<P>(filename: P) -> io::Result<io::Lines<io::BufReader<File>>>
+where P: AsRef<Path>, {
+    let file = File::open(filename)?;
+    Ok(io::BufReader::new(file).lines())
 }
 
 fn generate_xml_tag_from_json(json: &Value) -> String {
