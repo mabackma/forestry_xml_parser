@@ -7,9 +7,8 @@ edition = "2021"
 geo = "0.29.1"
 geo-types = "0.7.13"
 serde_json = "1.0.124"
-serde = { version = "1.0.207", features = ["derive"] }
+serde = { version = "1.0.215", features = ["derive"] }
 quick-xml = { version = "0.37.0", features = ["serialize"] }
 reqwest = { version = "0.12", features = ["blocking"] }
-xmltree = "0.11.0"
 xmlem = "0.2.3"
 regex = "1.11.1"
