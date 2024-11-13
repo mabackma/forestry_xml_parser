@@ -29,7 +29,7 @@ fn main() {
 // Returns the name of the JSON file
 fn create_json_file(input_string: &str) -> String {
     let property: ForestPropertyData;
-    let mut json_file_name = "".to_string();
+    let json_file_name;
     let mut standard = "".to_string();
 
     if input_string.starts_with("https://") || input_string.starts_with("http://") {
